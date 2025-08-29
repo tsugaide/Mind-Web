@@ -15,6 +15,7 @@ export const useUserStore = defineStore("userStore", () => {
       return;
     }
     user.value = authData.user;
+    console.log(user.value);
 
     const { data: profileData, error: profileErr } = await supabase
       .from("profiles")

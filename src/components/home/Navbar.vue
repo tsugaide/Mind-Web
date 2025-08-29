@@ -11,7 +11,7 @@ const props = defineProps({
 </script>
 <template>
   <div class="flex items-center justify-between py-5 px-8">
-    <img src="/src/assets/logo.png" alt="Mind" class="w-24 md:w-32" />
+    <img src="/src/assets/logo.png" alt="Mind" class="w-24 md:w-30" />
     <div
       @click="router.push('/profil')"
       class="relative cursor-pointer w-10 h-10 rounded-sm bg-[#252525] flex items-center justify-center text-white font-quattrocento text-2xl"

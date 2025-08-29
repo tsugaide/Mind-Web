@@ -15,7 +15,7 @@ const parentPosts = computed(() => {
 });
 </script>
 <template>
-  <div class="space-y-8 md:space-y-10 pb-15 mt-10 px-8 md:px-12">
+  <div class="space-y-8 md:space-y-10 pb-15 mt-10 px-8 md:px-12 relative">
     <PostCard
       v-for="parentPost in parentPosts"
       :key="parentPost.id"
@@ -28,6 +28,6 @@ const parentPosts = computed(() => {
       :comentCount="parentPost.coments_count"
       :avatar="parentPost.avatar_url"
     />
+    <InputBar />
   </div>
-  <InputBar />
 </template>

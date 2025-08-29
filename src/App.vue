@@ -1,9 +1,10 @@
 <script setup>
 import { RouterView } from "vue-router";
+import { onMounted, ref } from "vue";
 import { useUserStore } from "./store/userStore";
-import { onMounted } from "vue";
 
 const userStore = useUserStore();
+
 onMounted(async () => {
   await userStore.init();
 });
