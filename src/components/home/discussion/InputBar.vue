@@ -17,7 +17,7 @@ const submit = async () => {
 </script>
 <template>
   <div
-    class="fixed bottom-0 left-1/2 -translate-x-1/2 bg-white p-4 flex items-center justify-between w-[380px] md:w-[500px]"
+    class="fixed bottom-0 left-1/2 -translate-x-1/2 md:-translate-x-0 bg-white p-4 flex items-center justify-between w-[380px] md:w-[500px]"
   >
     <input
       v-model="newPost"

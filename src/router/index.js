@@ -8,6 +8,8 @@ import Discussion from "../components/home/discussion/Discussion.vue";
 import PostReply from "../components/home/discussion/PostReply.vue";
 import AllPost from "../components/home/discussion/AllPost.vue";
 import Main from "../pages/Main.vue";
+import LongAllPost from "../components/home/longWrite/LongAllPost.vue";
+import LongSpecificPost from "../components/home/longWrite/LongSpecificPost.vue";
 import { useAuthStore } from "../store/authStore";
 
 const routes = [
@@ -15,7 +17,7 @@ const routes = [
     path: "/",
     component: Main,
     children: [
-      { path: "", redirect: "beranda" },
+      { path: "", redirect: "/beranda/discussion" },
       {
         path: "beranda",
         component: Beranda,
@@ -28,7 +30,18 @@ const routes = [
               { path: "", component: AllPost },
             ],
           },
-          { path: "long-write", component: Wym },
+          {
+            path: "long-write",
+            component: Wym,
+            children: [
+              {
+                path: ":id",
+                component: LongSpecificPost,
+                props: true,
+              },
+              { path: "", component: LongAllPost },
+            ],
+          },
           { path: "", redirect: "discussion" },
         ],
       },
