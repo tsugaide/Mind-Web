@@ -44,11 +44,11 @@ const props = defineProps({
       {{ props.tag }}
     </p>
     <h1
-      class="font-quattrocento-sans font-bold text-3xl text-black/85 max-w-72 leading-6 mt-1"
+      class="font-quattrocento-sans font-bold text-3xl text-black/85 max-w-[410px] leading-6 mt-1"
     >
       {{ props.title }}
     </h1>
-    <p class="leading-4 mt-2 text-gray-700 text-sm max-w-60 font-garamond">
+    <p class="leading-4 mt-2 text-gray-700 text-sm max-w-[400px] font-garamond">
       {{ props.content }}
     </p>
   </div>
@@ -69,7 +69,7 @@ const props = defineProps({
     </div>
     <div class="flex space-x-0.5 font-montserrat items-center text-xs">
       <Eye />
-      <p class="min-w-[20px] text-center">{{ props.likes }}</p>
+      <p class="min-w-[20px] text-center">{{ props.views }}</p>
     </div>
   </div>
 </template>

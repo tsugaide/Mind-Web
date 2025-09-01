@@ -40,9 +40,9 @@ const removePhoto = () => {
 };
 </script>
 <template>
-  <div class="flex justify-center">
+  <div class="flex w-96 md:w-[400px] mx-auto">
     <div
-      class="w-80 flex flex-col justify-center items-center space-y-10 mt-10"
+      class="w-full flex flex-col justify-center items-center space-y-10 mt-6"
     >
       <div
         class="relative w-20 h-20 bg-[#252525] rounded-md text-7xl font-medium font-quattrocento flex items-center justify-center"

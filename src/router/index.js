@@ -53,6 +53,10 @@ const routes = [
             path: "post",
             component: () => import("../components/profil/daftarPost.vue"),
           },
+          {
+            path: "long-write",
+            component: () => import("../components/profil/daftarLongWrite.vue"),
+          },
           { path: "", redirect: "/profil/post" },
         ],
       },

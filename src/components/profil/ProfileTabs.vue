@@ -1,4 +1,5 @@
 <script setup>
+import { Route } from "lucide-vue-next";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -7,9 +8,24 @@ const router = useRouter();
   <div
     class="mt-6 border-b border-black flex space-x-6 text-lg font-quattrocento"
   >
-    <button class="font-semibold" @click="router.push('/profil/post')">
+    <RouterLink
+      :class="
+        $route.path === '/profil/post'
+          ? 'text-black font-semibold'
+          : 'text-gray-500'
+      "
+      to="/profil/post"
+    >
       Post
-    </button>
-    <button class="text-gray-500">writes</button>
+    </RouterLink>
+    <RouterLink
+      to="/profil/long-write"
+      :class="
+        $route.path === '/profil/long-write'
+          ? 'text-black font-semibold'
+          : 'text-gray-500'
+      "
+      >writes</RouterLink
+    >
   </div>
 </template>

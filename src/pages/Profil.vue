@@ -14,7 +14,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <div class="max-w-md mx-auto p-8">
+  <div class="max-w-md mx-20">
     <UserHeader
       :name="dataUser.display_name"
       :username="dataUser.username"
