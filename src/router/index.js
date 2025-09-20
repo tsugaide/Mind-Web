@@ -44,7 +44,9 @@ const routes = [
           },
           { path: "", redirect: "discussion" },
         ],
+        meta: { requiresAuth: true },
       },
+
       {
         path: "profil",
         component: () => import("../pages/Profil.vue"),

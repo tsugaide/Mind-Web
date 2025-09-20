@@ -70,9 +70,9 @@ export const usePostStore = defineStore("postStore", () => {
       )
       .subscribe();
 
-    onUnmounted(() => {
+    return () => {
       supabase.removeChannel(subscription);
-    });
+    };
   };
 
   const submitPost = async (content, parentId) => {

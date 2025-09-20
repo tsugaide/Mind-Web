@@ -11,11 +11,10 @@ export const useUserStore = defineStore("userStore", () => {
   const init = async () => {
     const { data: authData, error: authErr } = await supabase.auth.getUser();
     if (authErr || !authData.user) {
-      console.error("Gagal ambil auth user:", authErr);
+      // console.error("Gagal ambil auth user:", authErr);
       return;
     }
     user.value = authData.user;
-    console.log(user.value);
 
     const { data: profileData, error: profileErr } = await supabase
       .from("profiles")

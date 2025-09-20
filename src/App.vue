@@ -10,7 +10,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <div class="bg-[#ffffff]">
+  <div>
     <RouterView />
   </div>
 </template>

@@ -7,7 +7,7 @@ const menuItems = [
   { name: "Home", icon: Home, path: "/beranda/discussion" },
   { name: "Discussion", icon: MessageSquare, path: "/beranda/discussion" },
   { name: "LongWrite", icon: FileText, path: "/beranda/long-write" },
-  { name: "Quotes", icon: Quote },
+  { name: "Quotes", icon: Quote, path: "#" },
   { name: "Profile", icon: User, path: "/profil" },
 ];
 

@@ -1,13 +1,21 @@
 <script setup>
 import PostCard from "./PostCard.vue";
 import { usePostStore } from "../../../store/postStore.js";
-import { onMounted, computed } from "vue";
+import { onMounted, computed, onUnmounted } from "vue";
 import InputBar from "./InputBar.vue";
 
 const postStore = usePostStore();
-onMounted(async () => {
-  await postStore.fetchPosts();
-  postStore.subscribeToPosts();
+onMounted(() => {
+  let cleanup;
+
+  onUnmounted(() => {
+    if (cleanup) cleanup();
+  });
+
+  (async () => {
+    await postStore.fetchPosts();
+    cleanup = postStore.subscribeToPosts();
+  })();
 });
 
 const parentPosts = computed(() => {
