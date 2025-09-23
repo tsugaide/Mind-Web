@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, defineEmits } from "vue";
+import { ref, computed } from "vue";
 import { Eye, EyeOff } from "lucide-vue-next";
 
 const props = defineProps({

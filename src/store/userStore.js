@@ -4,22 +4,35 @@ import { supabase } from "../lib/supabase.js";
 
 export const useUserStore = defineStore("userStore", () => {
   const profile = ref(null);
-  const user = ref(null);
   const error = ref(false);
   const imageUrl = ref("");
+  const currentUser = ref(null);
 
-  const init = async () => {
+  const initCurrentUser = async () => {
     const { data: authData, error: authErr } = await supabase.auth.getUser();
     if (authErr || !authData.user) {
-      // console.error("Gagal ambil auth user:", authErr);
       return;
     }
-    user.value = authData.user;
 
     const { data: profileData, error: profileErr } = await supabase
       .from("profiles")
       .select("*")
-      .eq("id", user.value.id)
+      .eq("id", authData.user.id)
+      .single();
+
+    if (profileErr) {
+      console.error("Gagal ambil currentUser:", profileErr);
+      return;
+    }
+
+    currentUser.value = profileData;
+  };
+
+  const init = async (usr) => {
+    const { data: profileData, error: profileErr } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("username", usr)
       .single();
 
     if (profileErr) {
@@ -75,10 +88,11 @@ export const useUserStore = defineStore("userStore", () => {
   };
 
   return {
-    user,
     profile,
     init,
     updateProfil,
     uploadImage,
+    initCurrentUser,
+    currentUser,
   };
 });

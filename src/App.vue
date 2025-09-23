@@ -1,16 +1,24 @@
 <script setup>
-import { RouterView } from "vue-router";
-import { onMounted, ref } from "vue";
+import { RouterView, useRoute } from "vue-router";
+import { onMounted, ref, computed } from "vue";
 import { useUserStore } from "./store/userStore";
+import MainLayout from "./components/layout/MainLayout.vue";
+import AuthLayout from "./components/layout/AuthLayout.vue";
 
+const route = useRoute();
 const userStore = useUserStore();
 
 onMounted(async () => {
-  await userStore.init();
+  await userStore.initCurrentUser();
+});
+
+const layout = computed(() => {
+  if (route.meta.layout === "Auth") return AuthLayout;
+  return MainLayout;
 });
 </script>
 <template>
-  <div>
+  <component :is="layout">
     <RouterView />
-  </div>
+  </component>
 </template>

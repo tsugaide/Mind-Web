@@ -5,6 +5,7 @@ import { useUserStore } from "./userStore.js";
 
 export const usePostStore = defineStore("postStore", () => {
   const posts = ref([]);
+  const isLike = ref(false);
 
   const fetchPosts = async () => {
     const { data, error } = await supabase
@@ -97,11 +98,12 @@ export const usePostStore = defineStore("postStore", () => {
   };
 
   const likePost = async (postId) => {
-    const { error } = await supabase.rpc("increment_likes", {
+    const { error } = await supabase.rpc("toggle_likes", {
       post_id: postId,
+      is_like: isLike.value,
     });
 
-    if (error) console.error("Gagal like:", error);
+    if (!error) isLike.value = !isLike.value;
   };
 
   const replyPost = async (parentId) => {
@@ -119,5 +121,6 @@ export const usePostStore = defineStore("postStore", () => {
     submitPost,
     likePost,
     replyPost,
+    isLike,
   };
 });

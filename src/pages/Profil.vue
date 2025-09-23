@@ -2,26 +2,39 @@
 import UserHeader from "../components/profil/UserHeader.vue";
 import ProfileTabs from "../components/profil/ProfileTabs.vue";
 import { useUserStore } from "../store/userStore";
-import { onMounted, ref } from "vue";
-import { RouterView } from "vue-router";
+import { onMounted, ref, watch } from "vue";
+import { RouterView, useRoute } from "vue-router";
 
 const userStore = useUserStore();
-const dataUser = ref([]);
+const route = useRoute();
 
-onMounted(async () => {
-  await userStore.init();
-  dataUser.value = userStore.profile;
+const props = defineProps({
+  usr: String,
 });
+
+const fetchProfile = async () => {
+  await userStore.init(props.usr);
+  console.log(userStore.profile.id);
+};
+onMounted(fetchProfile);
+
+watch(
+  () => route.params.usr,
+  () => {
+    fetchProfile();
+  }
+);
 </script>
 <template>
-  <div class="max-w-md mx-20">
+  <div class="max-w-md mx-20" v-if="userStore.profile">
     <UserHeader
-      :name="dataUser.display_name"
-      :username="dataUser.username"
-      :bio="dataUser.bio"
-      :avatar="dataUser.avatar_url"
+      :name="userStore.profile.display_name"
+      :username="userStore.profile.username"
+      :bio="userStore.profile.bio"
+      :avatar="userStore.profile.avatar_url"
+      :isUser="userStore.currentUser.username == props.usr"
     />
-    <ProfileTabs />
-    <RouterView></RouterView>
+    <ProfileTabs :username="userStore.profile.username" />
+    <RouterView> </RouterView>
   </div>
 </template>

@@ -6,12 +6,14 @@ import LongPost from "../home/longWrite/LongPost.vue";
 
 const longStore = useLongStore();
 const userStore = useUserStore();
-const daftarLongStore = ref([]);
 
 onMounted(async () => {
   await longStore.fetchPosts();
-  daftarLongStore.value = longStore.posts.filter(
-    (p) => p.user_id == userStore.profile.id
+});
+
+const daftarLongStore = computed(() => {
+  return longStore.posts.filter(
+    (post) => post.user_id === userStore.profile.id
   );
 });
 </script>

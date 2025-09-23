@@ -9,19 +9,17 @@ import { RouterLink } from "vue-router";
     <RouterLink
       class="pb-1"
       :class="{
-        'border-b-2 border-black': $route.path.startsWith(
-          '/beranda/discussion'
-        ),
+        'border-b-2 border-black': $route.path.startsWith('/discussion'),
       }"
-      to="/beranda/discussion"
+      to="discussion"
       >Discussion</RouterLink
     >
     <RouterLink
       class="pb-1"
       :class="{
-        'border-b-2 border-black': $route.path === '/beranda/long-write',
+        'border-b-2 border-black': $route.path.startsWith('/long-write'),
       }"
-      to="/beranda/long-write"
+      to="long-write"
       >Long Write</RouterLink
     >
   </div>

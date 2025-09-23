@@ -18,14 +18,14 @@ watch(
   }
 );
 
-// onMounted(async () => {
-//   await auth.checkLogin();
-//   auth.listenAuth();
+onMounted(async () => {
+  await auth.checkLogin();
+  auth.listenAuth();
 
-//   if (auth.isLoggedIn) {
-//     router.push("/beranda/discussion");
-//   }
-// });
+  if (auth.isLoggedIn) {
+    router.push("/discussion");
+  }
+});
 </script>
 
 <template>

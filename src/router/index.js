@@ -1,84 +1,77 @@
 import { createRouter, createWebHistory } from "vue-router";
-import SignForm from "../components/register/SignForm.vue";
-import LoginForm from "../components/register/LoginForm.vue";
-import Beranda from "../pages/Beranda.vue";
-import Register from "../pages/Register.vue";
-import Wym from "../components/home/longWrite/LongWrite.vue";
-import Discussion from "../components/home/discussion/Discussion.vue";
-import PostReply from "../components/home/discussion/PostReply.vue";
-import AllPost from "../components/home/discussion/AllPost.vue";
-import Main from "../pages/Main.vue";
-import LongAllPost from "../components/home/longWrite/LongAllPost.vue";
-import LongSpecificPost from "../components/home/longWrite/LongSpecificPost.vue";
 import { useAuthStore } from "../store/authStore";
 
-const routes = [
-  {
-    path: "/",
-    component: Main,
-    children: [
-      { path: "", redirect: "/beranda/discussion" },
-      {
-        path: "beranda",
-        component: Beranda,
-        children: [
-          {
-            path: "discussion",
-            component: Discussion,
-            children: [
-              { path: ":id", component: PostReply },
-              { path: "", component: AllPost },
-            ],
-          },
-          {
-            path: "long-write",
-            component: Wym,
-            children: [
-              {
-                path: ":id",
-                component: LongSpecificPost,
-                props: true,
-              },
-              { path: "", component: LongAllPost },
-            ],
-          },
-          { path: "", redirect: "discussion" },
-        ],
-        meta: { requiresAuth: true },
-      },
+// Pages
+import Discussion from "../pages/Discussion.vue";
+import PostReply from "../components/home/discussion/PostReply.vue";
+import AllPost from "../components/home/discussion/AllPost.vue";
+import Wym from "../pages/LongWrite.vue";
+import LongAllPost from "../components/home/longWrite/LongAllPost.vue";
+import LongSpecificPost from "../components/home/longWrite/LongSpecificPost.vue";
+import Profil from "../pages/Profil.vue";
+import DaftarPost from "../components/profil/daftarPost.vue";
+import DaftarLongWrite from "../components/profil/daftarLongWrite.vue";
+import Register from "../pages/Register.vue";
+import SignForm from "../components/register/SignForm.vue";
+import LoginForm from "../components/register/LoginForm.vue";
+import { name } from "dayjs/locale/id";
 
+const routes = [
+  // redirect / ke discussion
+  { path: "/", redirect: "/discussion" },
+
+  // Discussion routes
+  {
+    path: "/discussion",
+    component: Discussion,
+    meta: { layout: "Main", requiresAuth: true },
+    children: [
+      { path: "", component: AllPost, name: "Discussion" },
+      { path: ":id", component: PostReply, props: true },
+    ],
+  },
+
+  // Long write routes
+  {
+    path: "/long-write",
+    component: Wym,
+    meta: { layout: "Main", requiresAuth: true },
+    children: [
+      { path: "", component: LongAllPost, name: "LongWrite" },
+      { path: ":id", component: LongSpecificPost, props: true },
+    ],
+  },
+
+  // Profil dynamic routes, termasuk edit profile
+  {
+    path: "/:usr",
+    component: Profil,
+    props: true,
+    name: "Profile",
+    meta: { layout: "Main", requiresAuth: true },
+    children: [
+      { path: "post", component: DaftarPost, props: true, name: "ProfilePost" },
       {
-        path: "profil",
-        component: () => import("../pages/Profil.vue"),
-        children: [
-          {
-            path: "post",
-            component: () => import("../components/profil/daftarPost.vue"),
-          },
-          {
-            path: "long-write",
-            component: () => import("../components/profil/daftarLongWrite.vue"),
-          },
-          { path: "", redirect: "/profil/post" },
-        ],
+        path: "long-write",
+        component: DaftarLongWrite,
+        props: true,
       },
       {
         path: "edit-profil",
         component: () => import("../pages/EditProfile.vue"),
       },
-      {
-        path: "create-long-write",
-        component: () => import("../pages/CreateLongWrite.vue"),
-      },
+      { path: "", redirect: { name: "ProfilePost" } },
     ],
   },
 
+  // Auth routes
   {
     path: "/register",
     component: Register,
+    meta: { layout: "Auth" },
     children: [
-      { path: "/signin", component: SignForm },
-      { path: "/login", component: LoginForm },
+      { path: "signin", component: SignForm },
+      { path: "login", component: LoginForm },
     ],
   },
 ];
@@ -88,9 +81,9 @@ const router = createRouter({
   routes,
 });
 
+// Global auth guard
 router.beforeEach(async (to, from, next) => {
   const auth = useAuthStore();
-
   await auth.checkLogin();
 
   if (to.meta.requiresAuth && !auth.isLoggedIn) {

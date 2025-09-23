@@ -13,8 +13,7 @@ const displayName = ref("");
 const previewUrl = ref(null);
 const file = ref(null);
 
-onMounted(async () => {
-  await userStore.init();
+onMounted(() => {
   displayName.value = userStore.profile.display_name;
   bio.value = userStore.profile.bio;
   file.value = userStore.profile.avatar_url;

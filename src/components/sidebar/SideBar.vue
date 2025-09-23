@@ -1,17 +1,19 @@
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { RouterLink } from "vue-router";
 import { Home, MessageSquare, FileText, Quote, User } from "lucide-vue-next";
+import { useUserStore } from "../../store/userStore";
+
+const props = defineProps({
+  username: String,
+});
 
 const menuItems = [
-  { name: "Home", icon: Home, path: "/beranda/discussion" },
-  { name: "Discussion", icon: MessageSquare, path: "/beranda/discussion" },
-  { name: "LongWrite", icon: FileText, path: "/beranda/long-write" },
+  { name: "Discussion", icon: MessageSquare, path: "/discussion" },
+  { name: "LongWrite", icon: FileText, path: "/long-write" },
   { name: "Quotes", icon: Quote, path: "#" },
-  { name: "Profile", icon: User, path: "/profil" },
+  { name: "Profile", icon: User, path: `/${props.username}` },
 ];
-
-const active = ref("Home");
 </script>
 
 <template>
@@ -27,15 +29,7 @@ const active = ref("Home");
               : 'text-black',
           ]"
         >
-          <component
-            :is="item.icon"
-            class="w-5 h-5 mr-3"
-            :class="[
-              $route.path.startsWith(item.path)
-                ? 'text-[#acacac]'
-                : 'text-black',
-            ]"
-          />
+          <component :is="item.icon" class="w-5 h-5 mr-3" />
           <span>{{ item.name }}</span>
         </RouterLink>
       </div>

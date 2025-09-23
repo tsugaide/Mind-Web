@@ -1,6 +1,5 @@
 <script setup>
 import { Eye, Heart } from "lucide-vue-next";
-import { defineProps } from "vue";
 import { useRelativeTime } from "../../../lib/useRelativeTime";
 
 const { formatTime } = useRelativeTime();

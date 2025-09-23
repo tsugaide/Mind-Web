@@ -1,15 +1,19 @@
 <script setup>
 import PostCard from "../../components/home/discussion/PostCard.vue";
 import { usePostStore } from "../../store/postStore";
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useUserStore } from "../../store/userStore";
 
 const postStore = usePostStore();
 const userStore = useUserStore();
 
+onMounted(async () => {
+  await postStore.fetchPosts();
+});
+
 const postsList = computed(() => {
   return postStore.posts.filter(
-    (postList) => postList.user_id === userStore.profile.id
+    (post) => post.user_id === userStore.profile.id
   );
 });
 </script>
@@ -17,6 +21,7 @@ const postsList = computed(() => {
 <template>
   <div class="py-6 space-y-8">
     <PostCard
+      v-if="postsList"
       v-for="postList in postsList"
       :key="postList.id"
       :displayName="postList.profiles.display_name"
@@ -26,7 +31,7 @@ const postsList = computed(() => {
       :likeCount="postList.likes_count"
       :createdAt="postList.created_at"
       :comentCount="postList.coments_count"
-      :avatar="null"
+      :avatar="postList.profiles.avatar_url"
     />
   </div>
 </template>

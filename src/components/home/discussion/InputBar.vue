@@ -1,6 +1,6 @@
 <script setup>
 import { SendHorizontal } from "lucide-vue-next";
-import { ref, defineProps } from "vue";
+import { ref } from "vue";
 import { usePostStore } from "../../../store/postStore.js";
 
 const postStore = usePostStore();

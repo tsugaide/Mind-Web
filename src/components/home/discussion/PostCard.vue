@@ -1,8 +1,8 @@
 <script setup>
 import { Heart, MessageSquare, CornerUpRight } from "lucide-vue-next";
-import { defineProps, ref, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { usePostStore } from "../../../store/postStore";
-import { useRouter } from "vue-router";
+import { RouterLink, useRouter } from "vue-router";
 import { useRelativeTime } from "../../../lib/useRelativeTime";
 
 const { formatTime } = useRelativeTime();
@@ -25,14 +25,15 @@ const props = defineProps({
 
 const like = async () => {
   await postStore.likePost(props.id);
-  isLike.value = true;
+  isLike.value = postStore.isLike;
 };
 </script>
 <template>
   <div class="">
     <div class="flex items-start gap-2">
-      <div
-        class="bg-[#252525] w-9 aspect-square rounded flex items-center justify-center text-white font-light font-montserrat text-2xl"
+      <RouterLink
+        :to="`/${props.username}`"
+        class="bg-[#252525] w-9 aspect-square rounded flex items-center justify-center text-white font-light font-montserrat text-2xl cursor-pointer"
       >
         <p v-if="!props.avatar">{{ props.displayName?.slice(0, 1) || "" }}</p>
         <img
@@ -41,7 +42,7 @@ const like = async () => {
           alt="Preview"
           class="w-full h-full object-cover rounded-md absolute"
         />
-      </div>
+      </RouterLink>
 
       <div>
         <div class="flex space-x-1 items-center">
@@ -65,6 +66,7 @@ const like = async () => {
         <div class="flex space-x-0.5 font-montserrat items-center text-xs">
           <Heart
             v-if="isLike"
+            @click="like"
             class="text-[#e63232]"
             :fill="'currentColor'"
             :stroke="'currentColor'"
@@ -73,14 +75,12 @@ const like = async () => {
           <p class="min-w-[20px] text-center">{{ props.likeCount }}</p>
         </div>
         <div class="flex space-x-0.5 font-montserrat items-center text-xs">
-          <MessageSquare
-            @click="router.push(`/beranda/discussion/${props.id}`)"
-          />
+          <MessageSquare @click="router.push(`/discussion/${props.id}`)" />
           <p class="min-w-[20px] text-center">{{ props.comentCount }}</p>
         </div>
         <CornerUpRight
           class="ml-10 cursor-pointer"
-          @click="router.push(`/beranda/discussion/${props.id}`)"
+          @click="router.push(`/discussion/${props.id}`)"
         />
       </div>
     </div>

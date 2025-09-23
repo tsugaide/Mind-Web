@@ -13,8 +13,8 @@ onMounted(async () => {
 <template>
   <div class="py-6">
     <RouterLink
-      :to="`/beranda/long-write/${post.id}`"
-      class="block px-8 py-3 hover:bg-gray-200 transition-all"
+      :to="`/long-write/${post.id}`"
+      class="block px-8 py-6 hover:bg-gray-200 transition-all"
       v-for="post in longStore.posts"
       :key="post.id"
     >

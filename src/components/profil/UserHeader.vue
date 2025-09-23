@@ -13,6 +13,7 @@ const props = defineProps({
   username: String,
   bio: String,
   avatar: String,
+  isUser: Boolean,
 });
 </script>
 <template>
@@ -36,12 +37,20 @@ const props = defineProps({
         <p class="text-gray-500 text-sm font-quattrocento">@{{ username }}</p>
         <div class="mt-2 flex gap-2">
           <button
+            v-if="isUser"
             class="bg-[#252525] text-white px-3 rounded-full text-[10px] font-quattrocento"
             @click="router.push('/edit-profil')"
           >
             Edit Profile
           </button>
           <button
+            v-else
+            class="bg-[#252525] text-white px-3 rounded-full text-[10px] font-quattrocento"
+          >
+            Follow
+          </button>
+          <button
+            v-if="isUser"
             @click="logOut"
             class="border border-[#252525] text-[#252525] px-3 rounded-full text-[10px] font-quattrocento"
           >

@@ -1,8 +1,9 @@
 <script setup>
 import { Route } from "lucide-vue-next";
-import { useRouter } from "vue-router";
 
-const router = useRouter();
+const props = defineProps({
+  username: String,
+});
 </script>
 <template>
   <div
@@ -10,18 +11,18 @@ const router = useRouter();
   >
     <RouterLink
       :class="
-        $route.path === '/profil/post'
+        $route.path === `/${props.username}/post`
           ? 'text-black font-semibold'
           : 'text-gray-500'
       "
-      to="/profil/post"
+      :to="`/${props.username}/post`"
     >
       Post
     </RouterLink>
     <RouterLink
-      to="/profil/long-write"
+      :to="`/${props.username}/long-write`"
       :class="
-        $route.path === '/profil/long-write'
+        $route.path === `/${props.username}/long-write`
           ? 'text-black font-semibold'
           : 'text-gray-500'
       "
