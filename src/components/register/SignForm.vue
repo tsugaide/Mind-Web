@@ -17,7 +17,7 @@ const handleSignUp = async () => {
     displayName.value
   );
   if (success) {
-    router.push("/login");
+    router.push("/register/login");
   }
 };
 </script>

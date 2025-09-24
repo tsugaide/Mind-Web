@@ -12,7 +12,7 @@ const router = useRouter();
 const handleLogIn = async () => {
   const success = await auth.logIn(username.value, password.value);
   if (success) {
-    router.push("/beranda/discussion");
+    router.push("/discussion");
   }
 };
 </script>

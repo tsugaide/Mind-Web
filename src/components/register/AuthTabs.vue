@@ -2,21 +2,21 @@
 <template>
   <div class="flex space-x-6 mt-16">
     <RouterLink
-      to="/signin"
+      to="/register/signin"
       class="font-bold font-quattrocento text-lg"
       :class="{
-        'text-[#2b2b2b]': $route.path === '/signin',
-        'text-gray-500 hover:text-black': $route.path !== '/signin',
+        'text-[#2b2b2b]': $route.path === '/register/signin',
+        'text-gray-500 hover:text-black': $route.path !== '/register/signin',
       }"
     >
       Sign in
     </RouterLink>
     <RouterLink
-      to="/login"
+      to="/register/login"
       class="font-bold font-quattrocento text-lg"
       :class="{
-        'text-[#2b2b2b]': $route.path === '/login',
-        'text-gray-500 hover:text-black': $route.path !== '/login',
+        'text-[#2b2b2b]': $route.path === '/register/login',
+        'text-gray-500 hover:text-black': $route.path !== '/register/login',
       }"
     >
       Log in
