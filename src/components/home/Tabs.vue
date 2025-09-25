@@ -11,7 +11,7 @@ import { RouterLink } from "vue-router";
       :class="{
         'border-b-2 border-black': $route.path.startsWith('/discussion'),
       }"
-      to="discussion"
+      to="/discussion"
       >Discussion</RouterLink
     >
     <RouterLink
@@ -19,7 +19,7 @@ import { RouterLink } from "vue-router";
       :class="{
         'border-b-2 border-black': $route.path.startsWith('/long-write'),
       }"
-      to="long-write"
+      to="/long-write"
       >Long Write</RouterLink
     >
   </div>

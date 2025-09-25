@@ -1,7 +1,7 @@
 <script setup>
 import { Camera } from "lucide-vue-next";
 import { CircleX } from "lucide-vue-next";
-import { useUserStore } from "../store/userStore";
+import { useUserStore } from "../../store/userStore";
 import { onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 
@@ -39,7 +39,7 @@ const removePhoto = () => {
 };
 </script>
 <template>
-  <div class="flex w-96 md:w-[400px] mx-auto">
+  <div class="flex w-80 md:w-[400px] mx-auto">
     <div
       class="w-full flex flex-col justify-center items-center space-y-10 mt-6"
     >

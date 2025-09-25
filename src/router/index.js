@@ -14,6 +14,7 @@ import DaftarLongWrite from "../components/profil/daftarLongWrite.vue";
 import Register from "../pages/Register.vue";
 import SignForm from "../components/register/SignForm.vue";
 import LoginForm from "../components/register/LoginForm.vue";
+import ProfilInformation from "../components/profil/ProfilInformation.vue";
 import { name } from "dayjs/locale/id";
 
 const routes = [
@@ -50,17 +51,29 @@ const routes = [
     name: "Profile",
     meta: { layout: "Main", requiresAuth: true },
     children: [
-      { path: "post", component: DaftarPost, props: true, name: "ProfilePost" },
       {
-        path: "long-write",
-        component: DaftarLongWrite,
-        props: true,
+        path: "",
+        component: ProfilInformation,
+        children: [
+          {
+            path: "post",
+            component: DaftarPost,
+            props: true,
+            name: "ProfilePost",
+          },
+          {
+            path: "long-write",
+            component: DaftarLongWrite,
+            props: true,
+          },
+          { path: "", redirect: { name: "ProfilePost" } },
+        ],
       },
+
       {
         path: "edit-profil",
-        component: () => import("../pages/EditProfile.vue"),
+        component: () => import("../components/profil/EditProfile.vue"),
       },
-      { path: "", redirect: { name: "ProfilePost" } },
     ],
   },
 

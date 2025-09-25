@@ -20,7 +20,7 @@ const props = defineProps({
   <div>
     <div class="flex gap-4 items-end">
       <div
-        class="relative w-20 h-20 bg-[#252525] rounded-md text-7xl font-medium font-quattrocento text-white flex items-center justify-center"
+        class="relative md:w-20 md:h-20 w-16 h-16 bg-[#252525] rounded-md md:text-7xl text-6xl font-medium font-quattrocento text-white flex items-center justify-center"
       >
         <p v-if="!props.avatar">{{ props.name?.slice(0, 1) || "" }}</p>
         <img
@@ -31,21 +31,25 @@ const props = defineProps({
         />
       </div>
       <div class="flex-1">
-        <h1 class="text-2xl font-medium font-quattrocento leading-none">
+        <h1
+          class="md:text-2xl text-xl font-medium font-quattrocento leading-none"
+        >
           {{ name }}
         </h1>
-        <p class="text-gray-500 text-sm font-quattrocento">@{{ username }}</p>
+        <p class="text-gray-500 md:text-sm text-xs font-quattrocento">
+          @{{ username }}
+        </p>
         <div class="mt-2 flex gap-2">
           <button
             v-if="isUser"
-            class="bg-[#252525] text-white px-3 rounded-full text-[10px] font-quattrocento"
-            @click="router.push('/edit-profil')"
+            class="bg-[#252525] text-white px-3 rounded-full md:text-[10px] text-[8px] font-quattrocento"
+            @click="router.push(`/${props.username}/edit-profil`)"
           >
             Edit Profile
           </button>
           <button
             v-else
-            class="bg-[#252525] text-white px-3 rounded-full text-[10px] font-quattrocento"
+            class="bg-[#252525] text-white px-3 rounded-full md:text-[10px] text-[8px] font-quattrocento"
           >
             Follow
           </button>

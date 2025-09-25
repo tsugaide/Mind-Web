@@ -3,10 +3,23 @@ import { RouterView, useRoute } from "vue-router";
 import PostCard from "./PostCard.vue";
 import InputBar from "./InputBar.vue";
 import { usePostStore } from "../../../store/postStore";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, onUnmounted } from "vue";
 
 const postStore = usePostStore();
 const route = useRoute();
+
+onMounted(() => {
+  let cleanup;
+
+  onUnmounted(() => {
+    if (cleanup) cleanup();
+  });
+
+  (async () => {
+    await postStore.fetchPosts();
+    cleanup = postStore.subscribeToPosts();
+  })();
+});
 
 const parentPostReply = computed(() => {
   return postStore.posts.find((post) => post.id === route.params.id);

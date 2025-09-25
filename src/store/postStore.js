@@ -78,10 +78,9 @@ export const usePostStore = defineStore("postStore", () => {
 
   const submitPost = async (content, parentId) => {
     const userStore = useUserStore();
-    const user = userStore.user;
-    const profile = userStore.profile;
+    const user = userStore.currentUser;
 
-    if (!content.trim() || !user || !profile) {
+    if (!content.trim() || !user) {
       console.log("profil tidak ada");
       return;
     }

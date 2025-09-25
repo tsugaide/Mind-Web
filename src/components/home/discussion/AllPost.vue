@@ -2,9 +2,11 @@
 import PostCard from "./PostCard.vue";
 import { usePostStore } from "../../../store/postStore.js";
 import { onMounted, computed, onUnmounted } from "vue";
+import { useUserStore } from "../../../store/userStore.js";
 import InputBar from "./InputBar.vue";
 
 const postStore = usePostStore();
+
 onMounted(() => {
   let cleanup;
 
@@ -23,7 +25,7 @@ const parentPosts = computed(() => {
 });
 </script>
 <template>
-  <div class="space-y-8 md:space-y-10 pb-15 mt-10 px-8 md:px-12 relative">
+  <div class="space-y-8 md:space-y-10 pb-15 mt-10 px-10 md:px-12 relative">
     <PostCard
       v-for="parentPost in parentPosts"
       :key="parentPost.id"

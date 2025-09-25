@@ -20,7 +20,7 @@ const daftarLongStore = computed(() => {
 <template>
   <div class="py-6">
     <RouterLink
-      :to="`/beranda/long-write/${post.id}`"
+      :to="`/long-write/${post.id}`"
       class="block px-2 py-3 hover:bg-gray-200 transition-all"
       v-for="post in daftarLongStore"
       :key="post.id"
