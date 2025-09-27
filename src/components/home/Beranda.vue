@@ -4,7 +4,6 @@ import Tabs from "./Tabs.vue";
 import SearchBar from "./SearchBar.vue";
 </script>
 <template>
-  <QuoteSeciton />
   <SearchBar />
   <Tabs class="sticky" />
   <slot></slot>

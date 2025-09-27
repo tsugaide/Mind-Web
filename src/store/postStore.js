@@ -6,8 +6,10 @@ import { useUserStore } from "./userStore.js";
 export const usePostStore = defineStore("postStore", () => {
   const posts = ref([]);
   const isLike = ref(false);
+  const loading = ref(false);
 
   const fetchPosts = async () => {
+    loading.value = true;
     const { data, error } = await supabase
       .from("posts")
       .select(
@@ -27,7 +29,10 @@ export const usePostStore = defineStore("postStore", () => {
       `
       )
       .order("created_at", { ascending: false });
-    if (!error) posts.value = data;
+    if (!error) {
+      posts.value = data;
+      loading.value = false;
+    }
   };
 
   const subscribeToPosts = () => {
@@ -121,5 +126,6 @@ export const usePostStore = defineStore("postStore", () => {
     likePost,
     replyPost,
     isLike,
+    loading,
   };
 });

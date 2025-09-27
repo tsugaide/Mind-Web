@@ -1,11 +1,21 @@
 <script setup>
 import { onMounted, ref } from "vue";
 import { RouterLink } from "vue-router";
-import { Home, MessageSquare, FileText, Quote, User } from "lucide-vue-next";
+import {
+  Home,
+  MessageSquare,
+  FileText,
+  Quote,
+  User,
+  Type,
+} from "lucide-vue-next";
 import { useUserStore } from "../../store/userStore";
 
 const props = defineProps({
-  username: String,
+  username: {
+    type: String,
+    default: "",
+  },
 });
 
 const menuItems = [

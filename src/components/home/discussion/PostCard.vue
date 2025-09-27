@@ -44,7 +44,7 @@ const like = async () => {
         />
       </RouterLink>
 
-      <div>
+      <div class="flex-1">
         <div class="flex space-x-1 items-center">
           <p class="font-semibold font-montserrat text-[#252525]">
             {{ props.displayName }}
@@ -53,7 +53,7 @@ const like = async () => {
             @{{ props.username }}
           </p>
         </div>
-        <p class="font-montserrat text-sm md:text-base">
+        <p class="font-montserrat text-sm md:text-base break-all">
           {{ props.content }}
         </p>
         <p class="text-[7px] md:text-[9px] text-gray-500 font-montserrat">

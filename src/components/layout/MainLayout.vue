@@ -2,6 +2,7 @@
 import SideBar from "../sidebar/SideBar.vue";
 import Navbar from "../home/Navbar.vue";
 import { useUserStore } from "../../store/userStore";
+import NavBottom from "../NavBottom/NavBottom.vue";
 
 const userStore = useUserStore();
 </script>
@@ -25,5 +26,10 @@ const userStore = useUserStore();
         <slot></slot>
       </div>
     </div>
+    <NavBottom
+      v-if="userStore.currentUser"
+      class="block md:hidden"
+      :username="userStore.currentUser.username"
+    />
   </div>
 </template>

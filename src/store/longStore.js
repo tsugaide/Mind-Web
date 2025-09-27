@@ -5,6 +5,8 @@ import { useUserStore } from "./userStore.js";
 
 export const useLongStore = defineStore("longStore", () => {
   const posts = ref([]);
+  const loading = ref(false);
+  const isLike = ref(false);
 
   const submitPost = async (title, content, tag) => {
     const userStore = useUserStore();
@@ -31,6 +33,7 @@ export const useLongStore = defineStore("longStore", () => {
   };
 
   const fetchPosts = async () => {
+    loading.value = true;
     const { data, error } = await supabase
       .from("longWrites")
       .select(
@@ -51,12 +54,30 @@ export const useLongStore = defineStore("longStore", () => {
       `
       )
       .order("created_at", { ascending: false });
-    if (!error) posts.value = data;
+    if (!error) {
+      loading.value = false;
+      posts.value = data;
+    }
+  };
+
+  const likePost = async (postId) => {
+    const { error } = await supabase.rpc("toggle_likes_long", {
+      post_id: postId,
+      is_like: isLike.value,
+    });
+
+    if (!error) {
+      isLike.value = !isLike.value;
+    } else {
+      console.error(error);
+    }
   };
 
   return {
     submitPost,
     fetchPosts,
     posts,
+    loading,
+    likePost,
   };
 });

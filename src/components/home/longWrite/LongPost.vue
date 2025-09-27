@@ -1,9 +1,13 @@
 <script setup>
 import { Eye, Heart } from "lucide-vue-next";
 import { useRelativeTime } from "../../../lib/useRelativeTime";
+import { useLongStore } from "../../../store/longStore";
+import { ref } from "vue";
 
 const { formatTime } = useRelativeTime();
+const longStore = useLongStore();
 
+const isLike = ref(false);
 const props = defineProps({
   displayName: String,
   username: String,
@@ -14,7 +18,13 @@ const props = defineProps({
   views: Number,
   likes: Number,
   avatar: String,
+  id: String,
 });
+
+const like = async () => {
+  await longStore.likePost(props.id);
+  isLike.value = longStore.isLike;
+};
 </script>
 <template>
   <div class="flex gap-2 items-center">
@@ -59,11 +69,13 @@ const props = defineProps({
     </div>
     <div class="flex space-x-0.5 font-montserrat items-center text-xs">
       <Heart
-        class="text-[#da8326]"
+        v-if="isLike"
+        @click.stop="like"
+        class="text-[#e63232]"
         :fill="'currentColor'"
         :stroke="'currentColor'"
       />
-      <!-- <Heart v-else @click="like" /> -->
+      <Heart v-else @click.stop="like" />
       <p class="min-w-[20px] text-center">{{ props.likes }}</p>
     </div>
     <div class="flex space-x-0.5 font-montserrat items-center text-xs">
