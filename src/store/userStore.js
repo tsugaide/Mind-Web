@@ -70,7 +70,7 @@ export const useUserStore = defineStore("userStore", () => {
   };
 
   const updateProfil = async (newName, newBio) => {
-    if (!user.value) await init();
+    if (!currentUser.value) await init();
 
     const { data, error: err } = await supabase
       .from("profiles")

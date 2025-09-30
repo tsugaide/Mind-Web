@@ -20,7 +20,7 @@ const props = defineProps({
   <div>
     <div class="flex gap-4 items-end">
       <div
-        class="relative md:w-20 md:h-20 w-16 h-16 bg-[#252525] rounded-md md:text-7xl text-6xl font-medium font-quattrocento text-white flex items-center justify-center"
+        class="relative md:w-20 md:h-20 w-20 h-20 bg-[#252525] rounded-md md:text-7xl text-6xl font-medium font-quattrocento text-white flex items-center justify-center"
       >
         <p v-if="!props.avatar">{{ props.name?.slice(0, 1) || "" }}</p>
         <img
@@ -49,14 +49,14 @@ const props = defineProps({
           </button>
           <button
             v-else
-            class="bg-[#252525] text-white px-3 rounded-full md:text-[10px] text-[8px] font-quattrocento"
+            class="bg-[#252525] text-white px-3 rounded-full md:text-sm text-xs font-quattrocento"
           >
             Follow
           </button>
           <button
             v-if="isUser"
             @click="logOut"
-            class="border border-[#252525] text-[#252525] px-3 rounded-full text-[10px] font-quattrocento"
+            class="border border-[#252525] text-[#252525] px-3 md:text-sm rounded-full text-xs font-quattrocento"
           >
             Log Out
           </button>

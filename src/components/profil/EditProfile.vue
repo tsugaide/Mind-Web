@@ -23,7 +23,7 @@ onMounted(() => {
 const updateDataProfile = async () => {
   await userStore.uploadImage(file.value);
   await userStore.updateProfil(displayName.value, bio.value);
-  router.push("/profil");
+  router.push(`/${userStore.currentUser.username}`);
 };
 
 const showPhoto = (e) => {
@@ -41,7 +41,7 @@ const removePhoto = () => {
 <template>
   <div class="flex w-80 md:w-[400px] mx-auto">
     <div
-      class="w-full flex flex-col justify-center items-center space-y-10 mt-6"
+      class="w-full flex flex-col justify-center items-start space-y-10 mt-6"
     >
       <div
         class="relative w-20 h-20 bg-[#252525] rounded-md text-7xl font-medium font-quattrocento flex items-center justify-center"
@@ -65,19 +65,27 @@ const removePhoto = () => {
       <div class="w-full">
         <label class="block text-sm font-quattrocento">Display Name</label>
         <input
-          class="w-full border-b border-[#252525] bg-transparent focus:outline-none py-1 pr-10"
+          class="w-full border-b border-[#252525] bg-transparent focus:outline-none py-1 pr-5"
           v-model="displayName"
+          maxlength="15"
         />
+        <p class="text-xs text-gray-400 mt-2 justify-self-end">
+          {{ displayName.length }}/15
+        </p>
       </div>
       <div class="w-full">
         <label class="block text-sm font-quattrocento">About You</label>
         <textarea
-          class="w-full h-24 border-b border-[#252525] bg-transparent focus:outline-none py-1 pr-10 resize-none"
+          class="w-full h-24 border-b border-[#252525] bg-transparent focus:outline-none py-1 pr-5 resize-none"
           v-model="bio"
+          maxlength="200"
         ></textarea>
+        <p class="text-xs text-gray-400 mt-2 justify-self-end">
+          {{ bio.length }}/200
+        </p>
       </div>
       <button
-        class="self-start border border-[#252525] text-[#252525] px-3 rounded-full text-sm font-quattrocento"
+        class="self-start border border-[#252525] text-[#252525] px-5 rounded-full text-base font-quattrocento hover:bg-black hover:text-white transition-all"
         @click="updateDataProfile"
       >
         Save

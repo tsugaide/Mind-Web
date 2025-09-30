@@ -26,7 +26,7 @@ watch(
 );
 </script>
 <template>
-  <div class="max-w-md md:mx-20 mx-12" v-if="userStore.profile">
+  <div class="max-w-md md:mx-20 mx-8" v-if="userStore.profile">
     <UserHeader
       :name="userStore.profile.display_name"
       :username="userStore.profile.username"

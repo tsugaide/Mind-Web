@@ -63,6 +63,5 @@ const parentPosts = computed(() => {
       :comentCount="parentPost.coments_count"
       :avatar="parentPost.avatar_url"
     />
-    <InputBar />
   </div>
 </template>

@@ -21,8 +21,8 @@ const props = defineProps({
 const menuItems = [
   { name: "Discussion", icon: MessageSquare, path: "/discussion" },
   { name: "LongWrite", icon: FileText, path: "/long-write" },
-  { name: "Quotes", icon: Quote, path: "#" },
   { name: "Profile", icon: User, path: `/${props.username}` },
+  { name: "Quotes", icon: Quote, path: "#" },
 ];
 </script>
 

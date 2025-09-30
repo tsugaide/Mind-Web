@@ -13,13 +13,13 @@ onMounted(async () => {
 
 const postsList = computed(() => {
   return postStore.posts.filter(
-    (post) => post.user_id === userStore.profile.id
+    (post) => post.user_id === userStore.profile.id && post.parent_id == null
   );
 });
 </script>
 
 <template>
-  <div class="py-6 space-y-8">
+  <div class="py-6 pb-20 space-y-8">
     <PostCard
       v-if="postsList"
       v-for="postList in postsList"
