@@ -82,6 +82,7 @@ export const usePostStore = defineStore("postStore", () => {
   };
 
   const submitPost = async (content, parentId) => {
+    loading.value = true;
     const userStore = useUserStore();
     const user = userStore.currentUser;
 
@@ -98,7 +99,11 @@ export const usePostStore = defineStore("postStore", () => {
       },
     ]);
 
-    if (error) console.error(error);
+    if (error) {
+      console.error(error);
+    } else {
+      loading.value = false;
+    }
   };
 
   const likePost = async (postId) => {

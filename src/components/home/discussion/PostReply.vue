@@ -42,7 +42,7 @@ const postsReply = computed(() => {
       :likeCount="parentPostReply.likes_count"
       :createdAt="parentPostReply.created_at"
       :comentCount="parentPostReply.coments_count"
-      :avatar="parentPostReply.avatar_url"
+      :avatar="parentPostReply.profiles.avatar_url"
     />
   </div>
   <div class="space-y-8 md:space-y-10 pb-16 px-18 md:px-22">
@@ -56,8 +56,7 @@ const postsReply = computed(() => {
       :likeCount="post.likes_count"
       :createdAt="post.created_at"
       :comentCount="post.coments_count"
-      :avatar="post.avatar_url"
+      :avatar="post.profiles.avatar_url"
     />
   </div>
-  <InputBar :parentId="parentPostReply.id" />
 </template>

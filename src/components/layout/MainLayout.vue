@@ -26,10 +26,6 @@ const userStore = useUserStore();
         <slot></slot>
       </div>
     </div>
-    <NavBottom
-      v-if="userStore.currentUser"
-      class="block md:hidden"
-      :username="userStore.currentUser.username"
-    />
+    <NavBottom class="block md:hidden" />
   </div>
 </template>

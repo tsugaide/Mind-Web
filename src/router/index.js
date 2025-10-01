@@ -14,14 +14,13 @@ import DaftarLongWrite from "../components/profil/daftarLongWrite.vue";
 import Register from "../pages/Register.vue";
 import SignForm from "../components/register/SignForm.vue";
 import LoginForm from "../components/register/LoginForm.vue";
-import ProfilInformation from "../components/profil/ProfilInformation.vue";
-import { name } from "dayjs/locale/id";
+import CreatePost from "../pages/CreatePost.vue";
 
 const routes = [
-  // redirect / ke discussion
   { path: "/", redirect: "/discussion" },
 
-  // Discussion routes
+  { path: "/create-post", component: CreatePost, meta: { requiresAuth: true } },
+
   {
     path: "/discussion",
     component: Discussion,
@@ -32,7 +31,6 @@ const routes = [
     ],
   },
 
-  // Long write routes
   {
     path: "/long-write",
     component: Wym,
@@ -43,41 +41,30 @@ const routes = [
     ],
   },
 
-  // Profil dynamic routes, termasuk edit profile
   {
     path: "/:usr",
     component: Profil,
     props: true,
-    name: "Profile",
     meta: { layout: "Main", requiresAuth: true },
     children: [
       {
         path: "",
-        component: ProfilInformation,
-        children: [
-          {
-            path: "post",
-            component: DaftarPost,
-            props: true,
-            name: "ProfilePost",
-          },
-          {
-            path: "long-write",
-            component: DaftarLongWrite,
-            props: true,
-          },
-          { path: "", redirect: { name: "ProfilePost" } },
-        ],
+        redirect: { name: "ProfilePost" },
       },
-
       {
-        path: "edit-profil",
-        component: () => import("../components/profil/EditProfile.vue"),
+        path: "post",
+        component: DaftarPost,
+        props: true,
+        name: "ProfilePost",
+      },
+      {
+        path: "long-write",
+        component: DaftarLongWrite,
+        props: true,
       },
     ],
   },
 
-  // Auth routes
   {
     path: "/register",
     component: Register,

@@ -13,6 +13,16 @@ const displayName = ref("");
 const previewUrl = ref(null);
 const file = ref(null);
 
+const props = defineProps({
+  isClose: Boolean,
+});
+
+const emit = defineEmits(["update:isClose"]);
+
+const close = () => {
+  emit("update:isClose", false);
+};
+
 onMounted(() => {
   displayName.value = userStore.profile.display_name;
   bio.value = userStore.profile.bio;
@@ -23,7 +33,7 @@ onMounted(() => {
 const updateDataProfile = async () => {
   await userStore.uploadImage(file.value);
   await userStore.updateProfil(displayName.value, bio.value);
-  router.push(`/${userStore.currentUser.username}`);
+  emit("update:isClose", false);
 };
 
 const showPhoto = (e) => {
@@ -39,10 +49,11 @@ const removePhoto = () => {
 };
 </script>
 <template>
-  <div class="flex w-80 md:w-[400px] mx-auto">
-    <div
-      class="w-full flex flex-col justify-center items-start space-y-10 mt-6"
-    >
+  <div
+    class="absolute flex flex-col items-center w-80 md:w-[400px] mx-auto bg-white border rounded-lg px-3 py-5 top-10 z-20"
+  >
+    <CircleX @click="close" class="self-end" />
+    <div class="w-full flex flex-col justify-center items-start space-y-10">
       <div
         class="relative w-20 h-20 bg-[#252525] rounded-md text-7xl font-medium font-quattrocento flex items-center justify-center"
       >

@@ -4,11 +4,13 @@ import { ref, onMounted } from "vue";
 import { usePostStore } from "../../../store/postStore";
 import { RouterLink, useRouter } from "vue-router";
 import { useRelativeTime } from "../../../lib/useRelativeTime";
+import InputBar from "./InputBar.vue";
 
 const { formatTime } = useRelativeTime();
 const postStore = usePostStore();
 const router = useRouter();
 const isLike = ref(false);
+const isComment = ref(false);
 const props = defineProps({
   content: String,
   displayName: String,
@@ -33,7 +35,7 @@ const like = async () => {
     <div class="flex items-start gap-2">
       <RouterLink
         :to="`/${props.username}`"
-        class="bg-[#252525] w-9 aspect-square rounded flex items-center justify-center text-white font-light font-quattrocento text-2xl cursor-pointer"
+        class="relative bg-[#252525] w-9 aspect-square rounded flex items-center justify-center text-white font-light font-quattrocento text-2xl cursor-pointer"
       >
         <p v-if="!props.avatar">{{ props.displayName?.slice(0, 1) || "" }}</p>
         <img
@@ -61,7 +63,7 @@ const like = async () => {
         </p>
       </div>
     </div>
-    <div class="flex mt-2 px-11">
+    <div class="flex flex-col mt-2 px-11">
       <div class="flex items-center space-x-3 [&_svg]:w-5 [&_svg]:h-5">
         <div class="flex space-x-0.5 font-montserrat items-center text-xs">
           <Heart
@@ -80,9 +82,10 @@ const like = async () => {
         </div>
         <CornerUpRight
           class="ml-10 cursor-pointer"
-          @click="router.push(`/discussion/${props.id}`)"
+          @click="isComment = !isComment"
         />
       </div>
+      <InputBar v-if="isComment" :parentId="props.id" />
     </div>
   </div>
 </template>

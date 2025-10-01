@@ -10,14 +10,14 @@ const props = defineProps({
   parentId: String,
 });
 const submit = async () => {
-  await postStore.submitPost(newPost.value, props.parentId ?? null);
-  if (props.parentId) await postStore.replyPost(props.parentId);
+  await postStore.submitPost(newPost.value, props.parentId);
+  await postStore.replyPost(props.parentId);
   newPost.value = "";
 };
 </script>
 <template>
   <div
-    class="fixed md:bottom-0 bottom-16 left-1/2 -translate-x-1/2 md:-translate-x-0 bg-white py-4 px-8 flex items-center justify-between w-[380px] md:w-[500px]"
+    class="bg-white py-4 flex items-center justify-between w-72 md:w-[500px]"
   >
     <textarea
       v-model="newPost"
