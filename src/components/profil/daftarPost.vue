@@ -3,9 +3,14 @@ import PostCard from "../../components/home/discussion/PostCard.vue";
 import { usePostStore } from "../../store/postStore";
 import { computed, onMounted, ref } from "vue";
 import { useUserStore } from "../../store/userStore";
+import { useRoute } from "vue-router";
 
 const postStore = usePostStore();
 const userStore = useUserStore();
+
+const props = defineProps({
+  isUser: Boolean,
+});
 
 onMounted(async () => {
   await postStore.fetchPosts();
@@ -32,6 +37,7 @@ const postsList = computed(() => {
       :createdAt="postList.created_at"
       :comentCount="postList.coments_count"
       :avatar="postList.profiles.avatar_url"
+      :isUser="props.isUser"
     />
   </div>
 </template>

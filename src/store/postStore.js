@@ -106,6 +106,17 @@ export const usePostStore = defineStore("postStore", () => {
     }
   };
 
+  const deletePost = async (postId) => {
+    loading.value = true;
+    const { error } = await supabase.from("posts").delete().eq("id", postId);
+
+    if (!error) {
+      loading.value = false;
+    } else {
+      console.error(error);
+    }
+  };
+
   const likePost = async (postId) => {
     const { error } = await supabase.rpc("toggle_likes", {
       post_id: postId,
@@ -132,5 +143,6 @@ export const usePostStore = defineStore("postStore", () => {
     replyPost,
     isLike,
     loading,
+    deletePost,
   };
 });

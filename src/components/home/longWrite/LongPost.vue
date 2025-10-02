@@ -29,7 +29,7 @@ const like = async () => {
 <template>
   <div class="flex gap-2 items-center">
     <div
-      class="relative w-11 h-11 bg-[#252525] rounded-md text-4xl font-light font-quattrocento text-white flex items-center justify-center"
+      class="relative w-10 h-10 bg-[#252525] rounded-md text-3xl font-light font-quattrocento text-white flex items-center justify-center"
     >
       <p v-if="!props.avatar">{{ props.displayName?.slice(0, 1) || "" }}</p>
       <img

@@ -1,16 +1,18 @@
 <script setup>
-import { Heart, MessageSquare, CornerUpRight } from "lucide-vue-next";
+import { Heart, MessageSquare, CornerUpRight, X } from "lucide-vue-next";
 import { ref, onMounted } from "vue";
 import { usePostStore } from "../../../store/postStore";
 import { RouterLink, useRouter } from "vue-router";
 import { useRelativeTime } from "../../../lib/useRelativeTime";
 import InputBar from "./InputBar.vue";
+import DeletePopUp from "./DeletePopUp.vue";
 
 const { formatTime } = useRelativeTime();
 const postStore = usePostStore();
 const router = useRouter();
 const isLike = ref(false);
 const isComment = ref(false);
+const isDelete = ref(false);
 const props = defineProps({
   content: String,
   displayName: String,
@@ -23,6 +25,7 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+  isUser: Boolean,
 });
 
 const like = async () => {
@@ -31,11 +34,12 @@ const like = async () => {
 };
 </script>
 <template>
+  <DeletePopUp v-model:isClose="isDelete" :id="props.id" v-if="isDelete" />
   <div class="">
     <div class="flex items-start gap-2">
       <RouterLink
         :to="`/${props.username}`"
-        class="relative bg-[#252525] w-9 aspect-square rounded flex items-center justify-center text-white font-light font-quattrocento text-2xl cursor-pointer"
+        class="relative bg-[#252525] w-8 aspect-square rounded flex items-center justify-center text-white font-light font-quattrocento text-2xl cursor-pointer"
       >
         <p v-if="!props.avatar">{{ props.displayName?.slice(0, 1) || "" }}</p>
         <img
@@ -54,8 +58,15 @@ const like = async () => {
           <p class="font-light text-[10px] text-gray-500 font-montserrat">
             @{{ props.username }}
           </p>
+          <div
+            @click="isDelete = true"
+            v-if="props.isUser"
+            class="ml-auto bg-[#c9c9c980] p-1 rounded-full cursor-pointer"
+          >
+            <X class="w-3 h-3 text-[#313131]" />
+          </div>
         </div>
-        <p class="font-montserrat text-base font-[450] break-all">
+        <p class="font-montserrat mt-1 text-base font-[450] break-all">
           {{ props.content }}
         </p>
         <p class="text-[9px] md:text-xs text-gray-500 font-montserrat">

@@ -15,6 +15,7 @@ const file = ref(null);
 
 const props = defineProps({
   isClose: Boolean,
+  username: String,
 });
 
 const emit = defineEmits(["update:isClose"]);
@@ -33,6 +34,7 @@ onMounted(() => {
 const updateDataProfile = async () => {
   await userStore.uploadImage(file.value);
   await userStore.updateProfil(displayName.value, bio.value);
+  await userStore.init(props.username);
   emit("update:isClose", false);
 };
 
@@ -50,7 +52,7 @@ const removePhoto = () => {
 </script>
 <template>
   <div
-    class="absolute flex flex-col items-center w-80 md:w-[400px] mx-auto bg-white border rounded-lg px-3 py-5 top-10 z-20"
+    class="absolute left-1/2 -translate-x-1/2 flex flex-col items-center w-[350px] md:w-[400px] mx-auto bg-white shadow-2xl rounded-lg px-4 py-5 top-10 z-20"
   >
     <CircleX @click="close" class="self-end" />
     <div class="w-full flex flex-col justify-center items-start space-y-10">

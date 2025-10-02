@@ -18,14 +18,17 @@ const fetchProfile = async () => {
 onMounted(fetchProfile);
 
 watch(
-  () => route.params.usr || userStore.currentUser,
+  () => route.params.usr,
   () => {
     fetchProfile();
   }
 );
 </script>
 <template>
-  <div class="max-w-md md:mx-20 mx-8" v-if="userStore.profile">
+  <div
+    class="max-w-md md:mx-20 mx-8"
+    v-if="userStore.profile && userStore.currentUser"
+  >
     <UserHeader
       :name="userStore.profile.display_name"
       :username="userStore.profile.username"
@@ -34,6 +37,11 @@ watch(
       :isUser="userStore.currentUser.username == props.usr"
     />
     <ProfileTabs :username="userStore.profile.username" />
-    <RouterView></RouterView>
+    <RouterView v-slot="{ Component }">
+      <component
+        :is="Component"
+        :isUser="userStore.currentUser.username == props.usr"
+      />
+    </RouterView>
   </div>
 </template>

@@ -50,7 +50,7 @@
     </nav>
     <div
       :class="{ 'bottom-14': showMenu, 'bottom-0': !showMenu }"
-      class="absolute left-1/2 -translate-x-1/2 flex gap-6 transition-all"
+      class="fixed left-1/2 -translate-x-1/2 flex gap-6 transition-all"
     >
       <RouterLink
         to="/create-post"
