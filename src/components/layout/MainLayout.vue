@@ -16,13 +16,13 @@ const userStore = useUserStore();
       :username="userStore.currentUser.username"
     />
 
-    <div class="flex flex-1 overflow-hidden">
+    <div class="flex overflow-hidden">
       <SideBar
         v-if="userStore.currentUser"
         class="hidden md:block"
         :username="userStore.currentUser.username"
       />
-      <div class="flex-1 overflow-y-auto">
+      <div class="overflow-y-auto flex-1 relative">
         <slot></slot>
       </div>
     </div>

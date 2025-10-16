@@ -116,10 +116,7 @@ const unFollow = async () => {
     </div>
     <p class="text-base mt-4 font-quattrocento">{{ bio }}</p>
   </div>
-  <div
-    class="w-full h-[100vh] top-0 bg-transparent absolute"
-    v-if="isEditProfil"
-  ></div>
+
   <EditProfile
     v-if="isEditProfil"
     v-model:is-close="isEditProfil"
