@@ -7,7 +7,7 @@ import { computed, ref } from "vue";
 
 const authStore = useAuthStore();
 const userStore = useUserStore();
-const isFollow = ref(false);
+const isEditProfil = ref(false);
 
 const props = defineProps({
   name: String,
@@ -21,9 +21,7 @@ const props = defineProps({
   follower: Number,
 });
 
-const isEditProfil = ref(
-  userStore.currentUser.following.includes(props.userId)
-);
+const isFollow = ref(userStore.currentUser.following.includes(props.userId));
 
 const logOut = async () => {
   authStore.logout();
@@ -40,10 +38,6 @@ const unFollow = async () => {
   await userStore.removeFollower(props.userId, props.currentUserId);
   isFollow.value = false;
 };
-
-// const isFollowing = computed(() => {
-//   return userStore.currentUser.following.includes(props.userId);
-// });
 </script>
 <template>
   <div>
