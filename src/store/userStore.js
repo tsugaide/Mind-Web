@@ -7,6 +7,7 @@ export const useUserStore = defineStore("userStore", () => {
   const error = ref(false);
   const imageUrl = ref("");
   const currentUser = ref(null);
+  const subscribe = ref(null);
 
   const initCurrentUser = async () => {
     const { data: authData, error: authErr } = await supabase.auth.getUser();
@@ -41,6 +42,7 @@ export const useUserStore = defineStore("userStore", () => {
     }
 
     profile.value = profileData;
+    subscribeToFollows(usr);
   };
 
   const uploadImage = async (file) => {
@@ -87,6 +89,80 @@ export const useUserStore = defineStore("userStore", () => {
     }
   };
 
+  const addFollowing = async (userId, followingId) => {
+    const { data, error: err } = await supabase.rpc("add_following", {
+      user_id: userId,
+      following_id: followingId,
+    });
+
+    if (err) {
+      console.error(err);
+      return;
+    }
+  };
+
+  const addFollower = async (userId, followerId) => {
+    const { data, error: err } = await supabase.rpc("add_follower", {
+      user_id: userId,
+      follower_id: followerId,
+    });
+
+    if (err) {
+      console.error(err);
+      return;
+    }
+  };
+
+  const removeFollower = async (userId, followerId) => {
+    const { data, error: err } = await supabase.rpc("remove_follower", {
+      user_id: userId,
+      follower_id: followerId,
+    });
+
+    if (err) {
+      console.error(err);
+      return;
+    }
+  };
+
+  const removeFollowing = async (userId, followingId) => {
+    const { data, error: err } = await supabase.rpc("remove_following", {
+      user_id: userId,
+      following_id: followingId,
+    });
+
+    if (err) {
+      console.error(err);
+      return;
+    }
+  };
+
+  const subscribeToFollows = (usr) => {
+    if (subscribe.value) subscribe.value.unsubscribe();
+    subscribe.value = supabase
+      .channel("realtime-follow")
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "profiles",
+          filter: `username=eq.${usr}`,
+        },
+        (payload) => {
+          const updated = payload.new;
+          profile.value.following = updated.following;
+          profile.value.follower = updated.follower;
+        }
+      )
+      .subscribe();
+  };
+
+  const clearListener = () => {
+    if (subscribe.value) subscribe.value.unsubscribe();
+    subscribe.value = null;
+  };
+
   return {
     profile,
     init,
@@ -94,5 +170,10 @@ export const useUserStore = defineStore("userStore", () => {
     uploadImage,
     initCurrentUser,
     currentUser,
+    addFollowing,
+    addFollower,
+    removeFollower,
+    removeFollowing,
+    clearListener,
   };
 });
