@@ -21,7 +21,9 @@ const props = defineProps({
   follower: Number,
 });
 
-const isFollow = ref(userStore.currentUser.following.includes(props.userId));
+const isFollow = computed(() =>
+  userStore.currentUser.following.includes(props.userId)
+);
 
 const logOut = async () => {
   authStore.logout();

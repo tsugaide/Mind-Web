@@ -59,12 +59,13 @@
         <Edit3 class="w-4 h-4" />
         <p>Post</p>
       </RouterLink>
-      <button
+      <RouterLink
+        to="/create-long-write"
         class="bg-black text-white w-32 h-10 rounded-full shadow-md flex items-center justify-center gap-2"
       >
         <FilePlus class="w-5 h-5" />
         <p>Long Post</p>
-      </button>
+      </RouterLink>
     </div>
   </div>
 </template>

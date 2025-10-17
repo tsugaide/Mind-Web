@@ -16,7 +16,7 @@ const fetchProfile = async () => {
   await userStore.init(props.usr);
 };
 onMounted(fetchProfile);
-onUnmounted(userStore.clearListener());
+onUnmounted(userStore.clearListener);
 
 watch(
   () => route.params.usr,

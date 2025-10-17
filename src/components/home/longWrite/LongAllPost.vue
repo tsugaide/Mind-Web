@@ -1,6 +1,5 @@
 <script setup>
 import LongPost from "./LongPost.vue";
-import WriteButton from "./WriteButton.vue";
 import SkeletonLoading from "../../skeletonLoading/SkeletonLoading.vue";
 import { useLongStore } from "../../../store/longStore";
 import { onMounted, ref } from "vue";
@@ -14,7 +13,7 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <div class="py-6">
+  <div class="pt-6 pb-18">
     <div class="px-8" v-for="n in 3" :key="n" v-if="longStore.loading">
       <div class="flex gap-2 items-center">
         <SkeletonLoading w="w-11" h="h-11" radius="rounded-md" />
@@ -65,5 +64,4 @@ onMounted(async () => {
       />
     </div>
   </div>
-  <WriteButton />
 </template>

@@ -15,11 +15,17 @@ import Register from "../pages/Register.vue";
 import SignForm from "../components/register/SignForm.vue";
 import LoginForm from "../components/register/LoginForm.vue";
 import CreatePost from "../pages/CreatePost.vue";
+import CreateLongWrite from "../pages/CreateLongWrite.vue";
 
 const routes = [
   { path: "/", redirect: "/discussion" },
 
   { path: "/create-post", component: CreatePost, meta: { requiresAuth: true } },
+  {
+    path: "/create-long-write",
+    component: CreateLongWrite,
+    meta: { requiresAuth: true },
+  },
 
   {
     path: "/discussion",
