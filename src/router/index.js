@@ -16,6 +16,7 @@ import SignForm from "../components/register/SignForm.vue";
 import LoginForm from "../components/register/LoginForm.vue";
 import CreatePost from "../pages/CreatePost.vue";
 import CreateLongWrite from "../pages/CreateLongWrite.vue";
+import Search from "../pages/Search.vue";
 
 const routes = [
   { path: "/", redirect: "/discussion" },
@@ -80,6 +81,7 @@ const routes = [
       { path: "login", component: LoginForm },
     ],
   },
+  { path: "/search", component: Search, meta: { layout: "Main" } },
 ];
 
 const router = createRouter({

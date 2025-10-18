@@ -3,6 +3,7 @@ import { useAuthStore } from "../../store/authStore";
 import { useUserStore } from "../../store/userStore";
 import { useRouter } from "vue-router";
 import EditProfile from "./EditProfile.vue";
+import FollowButton from "./FollowButton.vue";
 import { computed, ref } from "vue";
 
 const authStore = useAuthStore();
@@ -21,24 +22,8 @@ const props = defineProps({
   follower: Number,
 });
 
-const isFollow = computed(() =>
-  userStore.currentUser.following.includes(props.userId)
-);
-
 const logOut = async () => {
   authStore.logout();
-};
-
-const follow = async () => {
-  await userStore.addFollowing(props.currentUserId, props.userId);
-  await userStore.addFollower(props.userId, props.currentUserId);
-  isFollow.value = true;
-};
-
-const unFollow = async () => {
-  await userStore.removeFollowing(props.currentUserId, props.userId);
-  await userStore.removeFollower(props.userId, props.currentUserId);
-  isFollow.value = false;
 };
 </script>
 <template>
@@ -87,20 +72,10 @@ const unFollow = async () => {
               </button>
             </div>
             <template v-else>
-              <button
-                v-if="isFollow"
-                @click="unFollow"
-                class="bg-transparent border text-[#252525] px-3 rounded-full md:text-sm text-xs font-quattrocento"
-              >
-                Followed
-              </button>
-              <button
-                v-else
-                @click="follow"
-                class="bg-[#252525] text-white px-3 rounded-full md:text-sm text-xs font-quattrocento"
-              >
-                Follow
-              </button>
+              <FollowButton
+                :userId="props.userId"
+                :currentUserId="props.currentUserId"
+              />
             </template>
           </div>
         </div>
