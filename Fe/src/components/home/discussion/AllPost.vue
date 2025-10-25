@@ -62,6 +62,7 @@ const parentPosts = computed(() => {
       :createdAt="parentPost.created_at"
       :comentCount="parentPost.coments_count"
       :avatar="parentPost.profiles.avatar_url"
+      :images="parentPost.images"
     />
   </div>
 </template>

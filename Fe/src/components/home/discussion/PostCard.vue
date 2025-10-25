@@ -26,6 +26,7 @@ const props = defineProps({
     default: 0,
   },
   isUser: Boolean,
+  images: Array,
 });
 
 const like = async () => {
@@ -50,7 +51,7 @@ const like = async () => {
         />
       </RouterLink>
 
-      <div class="flex-1">
+      <div class="flex-1 flex flex-col gap-1">
         <div class="flex space-x-1 items-center">
           <p class="font-semibold font-montserrat text-[#252525]">
             {{ props.displayName }}
@@ -66,9 +67,20 @@ const like = async () => {
             <X class="w-3 h-3 text-[#313131]" />
           </div>
         </div>
-        <p class="font-montserrat mt-1 text-base font-[450] break-all">
+        <p class="font-montserrat text-base font-[450] break-all -mt-1">
           {{ props.content }}
         </p>
+        <div
+          v-if="props.images"
+          class="flex gap-2 shrink-0 overflow-x-scroll rounded-md"
+        >
+          <img
+            v-for="img in props.images"
+            :src="img"
+            alt=""
+            class="rounded-md border border-[#00000049] p-3 w-[70%] md:w-[50%]"
+          />
+        </div>
         <p class="text-[9px] md:text-xs text-gray-500 font-montserrat">
           Post in • {{ formatTime(props.createdAt) }}
         </p>

@@ -2,8 +2,10 @@ import { defineStore } from "pinia";
 import { ref, onUnmounted } from "vue";
 import { supabase } from "../lib/supabase.js";
 import { useUserStore } from "./userStore.js";
+import { useImageStore } from "./imageStore.js";
 
 export const usePostStore = defineStore("postStore", () => {
+  const imageStore = useImageStore();
   const posts = ref([]);
   const isLike = ref(false);
   const loading = ref(false);
@@ -21,6 +23,7 @@ export const usePostStore = defineStore("postStore", () => {
         likes_count,
         coments_count,
         parent_id,
+        images, 
         profiles(
           display_name,
           username,
@@ -81,21 +84,24 @@ export const usePostStore = defineStore("postStore", () => {
     };
   };
 
-  const submitPost = async (content, parentId) => {
+  const submitPost = async (content, parentId, file) => {
     loading.value = true;
     const userStore = useUserStore();
     const user = userStore.currentUser;
 
     if (!content.trim() || !user) {
-      console.log("profil tidak ada");
+      console.log("nope");
       return;
     }
+
+    const imageUrl = await imageStore.uploadImage(file);
 
     const { error } = await supabase.from("posts").insert([
       {
         content,
         user_id: user.id,
         parent_id: parentId,
+        images: imageUrl,
       },
     ]);
 
