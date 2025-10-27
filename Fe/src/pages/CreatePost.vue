@@ -65,6 +65,7 @@
         </div>
       </div>
     </div>
+    <p class="whitespace-pre-wrap">{{ newPost }}</p>
   </div>
 </template>
 

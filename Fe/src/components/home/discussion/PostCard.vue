@@ -13,6 +13,8 @@ const router = useRouter();
 const isLike = ref(false);
 const isComment = ref(false);
 const isDelete = ref(false);
+const popupImageUrl = ref(null);
+
 const props = defineProps({
   content: String,
   displayName: String,
@@ -67,48 +69,60 @@ const like = async () => {
             <X class="w-3 h-3 text-[#313131]" />
           </div>
         </div>
-        <p class="font-montserrat text-base font-[450] break-all -mt-1">
+        <p
+          class="font-montserrat text-base font-[450] break-all -mt-1 whitespace-pre-wrap"
+        >
           {{ props.content }}
         </p>
-        <div
-          v-if="props.images"
-          class="flex gap-2 shrink-0 overflow-x-scroll rounded-md"
-        >
+        <div v-if="props.images" class="flex gap-2 shrink-0 overflow-x-scroll">
           <img
             v-for="img in props.images"
+            @click="popupImageUrl = img"
             :src="img"
             alt=""
-            class="rounded-md border border-[#00000049] p-3 w-[70%] md:w-[50%]"
+            class="rounded-md border border-[#00000041] w-[80%] md:w-[50%]"
           />
         </div>
-        <p class="text-[9px] md:text-xs text-gray-500 font-montserrat">
+        <p
+          class="text-[9px] md:text-xs text-gray-500 font-montserrat whitespace-pre-wrap"
+        >
           Post in • {{ formatTime(props.createdAt) }}
         </p>
+        <div class="flex flex-col mt-1">
+          <div class="flex items-center space-x-3 [&_svg]:w-5 [&_svg]:h-5">
+            <div class="flex space-x-0.5 font-montserrat items-center text-xs">
+              <Heart
+                v-if="isLike"
+                @click="like"
+                class="text-[#e63232]"
+                :fill="'currentColor'"
+                :stroke="'currentColor'"
+              />
+              <Heart v-else @click="like" />
+              <p class="min-w-[20px] text-center">{{ props.likeCount }}</p>
+            </div>
+            <div class="flex space-x-0.5 font-montserrat items-center text-xs">
+              <MessageSquare @click="router.push(`/discussion/${props.id}`)" />
+              <p class="min-w-[20px] text-center">{{ props.comentCount }}</p>
+            </div>
+            <CornerUpRight
+              class="ml-10 cursor-pointer"
+              @click="isComment = !isComment"
+            />
+          </div>
+          <InputBar v-if="isComment" :parentId="props.id" />
+        </div>
       </div>
     </div>
-    <div class="flex flex-col mt-2 px-11">
-      <div class="flex items-center space-x-3 [&_svg]:w-5 [&_svg]:h-5">
-        <div class="flex space-x-0.5 font-montserrat items-center text-xs">
-          <Heart
-            v-if="isLike"
-            @click="like"
-            class="text-[#e63232]"
-            :fill="'currentColor'"
-            :stroke="'currentColor'"
-          />
-          <Heart v-else @click="like" />
-          <p class="min-w-[20px] text-center">{{ props.likeCount }}</p>
-        </div>
-        <div class="flex space-x-0.5 font-montserrat items-center text-xs">
-          <MessageSquare @click="router.push(`/discussion/${props.id}`)" />
-          <p class="min-w-[20px] text-center">{{ props.comentCount }}</p>
-        </div>
-        <CornerUpRight
-          class="ml-10 cursor-pointer"
-          @click="isComment = !isComment"
-        />
-      </div>
-      <InputBar v-if="isComment" :parentId="props.id" />
-    </div>
+  </div>
+  <div
+    v-if="popupImageUrl"
+    class="fixed top-0 left-0 z-50 w-full h-[100vh] bg-[#fffffff3] flex justify-center items-center"
+  >
+    <img :src="popupImageUrl" alt="" class="md:h-[100vh]" />
+    <X
+      @click="popupImageUrl = null"
+      class="absolute top-8 right-10 bg-[#0c0c0c4d] text-[#1d1d1d73] p-3 rounded-full w-10 h-10 cursor-pointer"
+    />
   </div>
 </template>

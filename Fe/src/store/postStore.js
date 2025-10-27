@@ -88,20 +88,23 @@ export const usePostStore = defineStore("postStore", () => {
     loading.value = true;
     const userStore = useUserStore();
     const user = userStore.currentUser;
+    const imageUrl = ref(null);
 
     if (!content.trim() || !user) {
       console.log("nope");
       return;
     }
 
-    const imageUrl = await imageStore.uploadImage(file);
+    if (file.length > 0) {
+      imageUrl.value = await imageStore.uploadImage(file);
+    }
 
     const { error } = await supabase.from("posts").insert([
       {
         content,
         user_id: user.id,
         parent_id: parentId,
-        images: imageUrl,
+        images: imageUrl.value,
       },
     ]);
 
