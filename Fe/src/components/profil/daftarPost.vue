@@ -38,7 +38,7 @@ const postsList = computed(() => {
       :comentCount="postList.coments_count"
       :avatar="postList.profiles.avatar_url"
       :isUser="props.isUser"
-      :images="postList.images"
+      :files="postList.files"
     />
   </div>
 </template>

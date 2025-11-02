@@ -43,6 +43,7 @@ const postsReply = computed(() => {
       :createdAt="parentPostReply.created_at"
       :comentCount="parentPostReply.coments_count"
       :avatar="parentPostReply.profiles.avatar_url"
+      :files="parentPostReply.files"
     />
   </div>
   <div class="space-y-8 md:space-y-10 pb-16 px-18 md:px-22">
@@ -57,6 +58,7 @@ const postsReply = computed(() => {
       :createdAt="post.created_at"
       :comentCount="post.coments_count"
       :avatar="post.profiles.avatar_url"
+      :files="post.files"
     />
   </div>
 </template>

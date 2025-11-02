@@ -1,9 +1,10 @@
 <script setup>
 import { Heart, MessageSquare, CornerUpRight, X } from "lucide-vue-next";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { usePostStore } from "../../../store/postStore";
 import { RouterLink, useRouter } from "vue-router";
 import { useRelativeTime } from "../../../lib/useRelativeTime";
+import linkifyHtml from "linkify-html";
 import InputBar from "./InputBar.vue";
 import DeletePopUp from "./DeletePopUp.vue";
 
@@ -28,16 +29,30 @@ const props = defineProps({
     default: 0,
   },
   isUser: Boolean,
-  images: Array,
+  files: Array,
 });
 
 const like = async () => {
   await postStore.likePost(props.id);
   isLike.value = postStore.isLike;
 };
+
+const linkedText = linkifyHtml(props.content, {
+  target: "_blank",
+  className: "text-blue-500",
+});
+
+const filesUrl = computed(() => {
+  return props.files.map((i) => i.url);
+});
 </script>
 <template>
-  <DeletePopUp v-model:isClose="isDelete" :id="props.id" v-if="isDelete" />
+  <DeletePopUp
+    v-model:isClose="isDelete"
+    :id="props.id"
+    :fileId="props.files.map((i) => i.id)"
+    v-if="isDelete"
+  />
   <div class="">
     <div class="flex items-start gap-2">
       <RouterLink
@@ -71,12 +86,11 @@ const like = async () => {
         </div>
         <p
           class="font-montserrat text-base font-[450] break-all -mt-1 whitespace-pre-wrap"
-        >
-          {{ props.content }}
-        </p>
-        <div v-if="props.images" class="flex gap-2 shrink-0 overflow-x-scroll">
+          v-html="linkedText"
+        ></p>
+        <div v-if="props.files" class="flex gap-2 shrink-0 overflow-x-scroll">
           <img
-            v-for="img in props.images"
+            v-for="img in filesUrl"
             @click="popupImageUrl = img"
             :src="img"
             alt=""

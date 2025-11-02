@@ -23,4 +23,16 @@ router.get("/imageUp", (req, res) => {
   }
 });
 
+router.delete("/imageDel", async (req, res) => {
+  try {
+    const { fileId } = req.body;
+
+    const result = await imagekit.bulkDeleteFiles(fileId);
+    res.json({ succes: true, result });
+  } catch (error) {
+    console.error(err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 export default router;

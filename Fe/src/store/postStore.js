@@ -23,7 +23,7 @@ export const usePostStore = defineStore("postStore", () => {
         likes_count,
         coments_count,
         parent_id,
-        images, 
+        files, 
         profiles(
           display_name,
           username,
@@ -88,15 +88,15 @@ export const usePostStore = defineStore("postStore", () => {
     loading.value = true;
     const userStore = useUserStore();
     const user = userStore.currentUser;
-    const imageUrl = ref(null);
+    const fileData = ref(null);
 
-    if (!content.trim() || !user) {
+    if ((!content.trim() && file.length <= 0) || !user) {
       console.log("nope");
       return;
     }
 
     if (file.length > 0) {
-      imageUrl.value = await imageStore.uploadImage(file);
+      fileData.value = await imageStore.uploadImage(file);
     }
 
     const { error } = await supabase.from("posts").insert([
@@ -104,7 +104,7 @@ export const usePostStore = defineStore("postStore", () => {
         content,
         user_id: user.id,
         parent_id: parentId,
-        images: imageUrl.value,
+        files: fileData.value,
       },
     ]);
 
@@ -115,15 +115,26 @@ export const usePostStore = defineStore("postStore", () => {
     }
   };
 
-  const deletePost = async (postId) => {
+  const deletePost = async (postId, fileId) => {
     loading.value = true;
+
     const { error } = await supabase.from("posts").delete().eq("id", postId);
 
-    if (!error) {
-      loading.value = false;
+    const res = await fetch(`${import.meta.env.VITE_FETCH_API}/imageDel`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ fileId }),
+    });
+
+    const data = await res.json();
+
+    if (error || !data.success) {
+      console.error("Gagal hapus post atau file:", error, data.error);
     } else {
-      console.error(error);
+      console.log("Post dan file berhasil dihapus");
     }
+
+    loading.value = false;
   };
 
   const likePost = async (postId) => {

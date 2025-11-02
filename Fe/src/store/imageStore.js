@@ -4,7 +4,7 @@ import { defineStore } from "pinia";
 
 export const useImageStore = defineStore("image", () => {
   const authenticate = async () => {
-    const res = await fetch(import.meta.env.VITE_FETCH_API);
+    const res = await fetch(`${import.meta.env.VITE_FETCH_API}/imageUp`);
     if (!res.ok) throw new Error("Auth failed");
     return await res.json();
   };
@@ -29,7 +29,7 @@ export const useImageStore = defineStore("image", () => {
             fileName: f.name,
           });
 
-          return res.url;
+          return { url: res.url, id: res.fileId };
         })
       );
 
