@@ -35,6 +35,7 @@ export const usePostStore = defineStore("postStore", () => {
     if (!error) {
       posts.value = data;
       loading.value = false;
+      console.error(error);
     }
   };
 
