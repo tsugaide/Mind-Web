@@ -50,7 +50,7 @@ const filesUrl = computed(() => {
   <DeletePopUp
     v-model:isClose="isDelete"
     :id="props.id"
-    :fileId="props.files.map((i) => i.id)"
+    :fileId="props.files?.map((i) => i.id)"
     v-if="isDelete"
   />
   <div class="">

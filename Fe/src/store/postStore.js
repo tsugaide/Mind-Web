@@ -35,7 +35,6 @@ export const usePostStore = defineStore("postStore", () => {
     if (!error) {
       posts.value = data;
       loading.value = false;
-      console.error(error);
     }
   };
 
@@ -118,21 +117,21 @@ export const usePostStore = defineStore("postStore", () => {
 
   const deletePost = async (postId, fileId) => {
     loading.value = true;
+    const data = ref(null);
 
     const { error } = await supabase.from("posts").delete().eq("id", postId);
 
-    const res = await fetch(`${import.meta.env.VITE_FETCH_API}/imageDel`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ fileId }),
-    });
+    if (fileId) {
+      const res = await fetch(`${import.meta.env.VITE_FETCH_API}/imageDel`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fileId }),
+      });
+      data.value = await res.json();
+    }
 
-    const data = await res.json();
-
-    if (error || !data.success) {
-      console.error("Gagal hapus post atau file:", error, data.error);
-    } else {
-      console.log("Post dan file berhasil dihapus");
+    if (error || (fileId && !data.value?.success)) {
+      console.error("Gagal hapus post atau file:", error, data.value.error);
     }
 
     loading.value = false;
