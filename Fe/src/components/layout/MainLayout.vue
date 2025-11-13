@@ -3,8 +3,12 @@ import SideBar from "../sidebar/SideBar.vue";
 import Navbar from "../home/Navbar.vue";
 import { useUserStore } from "../../store/userStore";
 import NavBottom from "../NavBottom/NavBottom.vue";
+import { onMounted } from "vue";
 
 const userStore = useUserStore();
+onMounted(async () => {
+  await userStore.currentUser();
+});
 </script>
 
 <template>

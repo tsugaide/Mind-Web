@@ -4,6 +4,7 @@ import { ref, onMounted, computed } from "vue";
 import { usePostStore } from "../../../store/postStore";
 import { RouterLink, useRouter } from "vue-router";
 import { useRelativeTime } from "../../../lib/useRelativeTime";
+import { escape } from "he";
 import linkifyHtml from "linkify-html";
 import InputBar from "./InputBar.vue";
 import DeletePopUp from "./DeletePopUp.vue";
@@ -37,7 +38,7 @@ const like = async () => {
   isLike.value = postStore.isLike;
 };
 
-const linkedText = linkifyHtml(props.content, {
+const linkedText = linkifyHtml(escape(props.content), {
   target: "_blank",
   className: "text-blue-500",
 });
